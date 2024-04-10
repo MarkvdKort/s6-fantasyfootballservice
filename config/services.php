@@ -30,5 +30,18 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'rabbitmq' => [
+        'driver' => 'rabbitmq',
+        'host' => env('RABBITMQ_HOST', 'localhost'),
+        'port' => env('RABBITMQ_PORT', 5672),
+        'user' => env('RABBITMQ_USER', 'guest'),
+        'password' => env('RABBITMQ_PASSWORD', 'guest'),
+        'vhost' => env('RABBITMQ_VHOST', '/'),
+        'options' => [
+            'ssl_options' => [
+                'cafile' => env('RABBITMQ_SSL_CAFILE', null),
+            ],
+        ],
+    ],
 
 ];

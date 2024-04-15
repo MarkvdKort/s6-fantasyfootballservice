@@ -68,3 +68,5 @@ WORKDIR ${WORKDIR}
 
 # -- Copy application src to workdir (/code) 
 COPY --chown=www-data:www-data . ${WORKDIR}
+
+RUN php artisan config:cache

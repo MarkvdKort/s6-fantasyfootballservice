@@ -53,7 +53,7 @@ RUN pecl install redis \
 
 # Ensure PHP logs are captured by the container
 ENV LOG_CHANNEL=stderr
-ß
+
 # -- Install composer
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/local/bin --filename=composer

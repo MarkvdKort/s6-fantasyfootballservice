@@ -16,7 +16,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write, read
+      packages: write
     # Sets the permissions granted to the GITHUB_TOKEN for the actions in this job.
 
     steps:

@@ -60,9 +60,6 @@ RUN curl -sS https://getcomposer.org/installer | \
 
 FROM container
 
-# # -- Copy over entrypoint
-# COPY ./docker-entrypoint.sh /
-# RUN chmod +x /docker-entrypoint.sh
 # -- Change current user to www-data
 USER www-data
 
@@ -71,8 +68,3 @@ WORKDIR ${WORKDIR}
 
 # -- Copy application src to workdir (/code) 
 COPY --chown=www-data:www-data . ${WORKDIR}
-
-# -- Run entrypoint script
-# ENTRYPOINT ["php artisan config:cache"]
-
-RUN php:artisan config:cache

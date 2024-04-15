@@ -14,8 +14,10 @@ spec:
         app: fantasy-football-service
     spec:
       containers:
-      - name: fantasy-football-service
-        image: sail-8.3/app
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8000
+        - name: fantasy-football-service
+          image: ghcr.io/markvdkort/s6-fantasyfootballservice:development
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+      imagePullSecrets:
+        - name: github-registry-login

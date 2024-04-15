@@ -73,5 +73,5 @@ WORKDIR ${WORKDIR}
 COPY --chown=www-data:www-data . ${WORKDIR}
 
 # -- Run entrypoint script
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["php artisan config:cache"]
     

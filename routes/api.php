@@ -24,3 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('leagues/create', CreateLeagueController::class);
 Route::post('fantasy-teams/create', CreateFantasyTeamController::class);
 Route::post('users/create', CreateUserController::class);
+
+Route::get('leagues', function () {
+    return response()->json('Leagues', 200);
+});

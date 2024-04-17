@@ -32,6 +32,7 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update && apt-get install nodejs -y
 RUN curl https://www.npmjs.com/install.sh | sudo sh
 
+RUN apt-get update && apt-get install -y git curl libmcrypt-dev default-mysql-client
 # Common PHP Extensions
 RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install \
@@ -60,14 +61,31 @@ RUN curl -sS https://getcomposer.org/installer | \
 
 FROM container
 
-# -- Change current user to www-data
-USER www-data
+# -- Copy over entrypoint
+COPY ./.nginx/  /docker-entrypoint.d/
+RUN chmod +x /docker-entrypoint.d/docker-entrypoint.sh
 
 # -- Change workdir (/code)
 WORKDIR ${WORKDIR}
 
 # -- Copy application src to workdir (/code) 
-COPY --chown=www-data:www-data . ${WORKDIR}
+COPY . ${WORKDIR}
+
+RUN chown -R 33:33 "/var/www"
+RUN chown -R unit:unit ${WORKDIR}
+
+# -- Install composer
+RUN composer config
+
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --ignore-platform-req=ext-mongodb
+
+RUN npm install --force
+
+RUN npm run build
+
+RUN rm -rf node_modules
+
+RUN chown -R unit:unit ${WORKDIR}/vendor
 
 EXPOSE 80
 

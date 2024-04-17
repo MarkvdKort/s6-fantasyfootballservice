@@ -1,3 +1,3 @@
 php artisan config:cache
 
-php artisan migrate:fresh --force || exit 1
+php artisan migrate --force || exit 1

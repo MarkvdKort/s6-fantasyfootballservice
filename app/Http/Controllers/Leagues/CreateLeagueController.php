@@ -25,6 +25,8 @@ class CreateLeagueController extends Controller
             'teams' => $data['teams'],
         ]);
 
+        $league->fantasyTeams()->first()->user()->attach($request->user()->id);
+
         return response()->json('League created', 201);
     }
 }

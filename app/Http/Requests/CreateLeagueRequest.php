@@ -22,7 +22,6 @@ class CreateLeagueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //name string and teams int
             'name' => ['required', 'string'],
             'teams' => ['required', 'int']
         ];

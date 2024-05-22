@@ -36,7 +36,7 @@
             "root": "/code/public/",
             "script": "index.php",
             "processes": {
-                "max": 10,
+                "max": 30,
                 "spare": 5,
                 "idle_timeout": 10
             }

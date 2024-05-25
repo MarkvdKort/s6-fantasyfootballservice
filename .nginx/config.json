@@ -1,0 +1,51 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "routes"
+        },
+        "*:5173": {
+            "pass": "routes"
+        }
+    },
+
+    "routes": [
+        {
+            "match": {
+                "uri": "/healthz"
+            },
+            "action": {
+                "return": 200
+            }
+        },
+        {
+            "match": {
+                "uri": "!/index.php"
+            },
+            "action": {
+                "share": "/code/public$uri",
+                "fallback": {
+                    "pass": "applications/laravel"
+                }
+            }
+        }
+    ],
+
+    "applications": {
+        "laravel": {
+            "type": "php",
+            "root": "/code/public/",
+            "script": "index.php",
+            "processes": {
+                "max": 30,
+                "spare": 5,
+                "idle_timeout": 10
+            }
+        }
+    },
+
+    "settings": {
+        "http": {
+            "max_body_size": 2400000000
+        }
+    }
+}

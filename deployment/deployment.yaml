@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fantasy-football-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fantasy-football-service
+  template:
+    metadata:
+      labels:
+        app: fantasy-football-service
+    spec:
+      containers:
+        - name: fantasy-football-service
+          image: ghcr.io/markvdkort/s6-fantasyfootballservice:development
+          imagePullPolicy: Always
+          env:
+            - name: DB_CONNECTION
+              value: "mysql"
+            - name: DB_HOST
+              value: "mysql-fantasy-football-service-service"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              value: "fantasy-football-service"
+            - name: DB_USERNAME
+              value: "user"
+            - name: DB_PASSWORD
+              value: "password"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq-draftservice-service"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USER
+              value: "guest"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fantasy-football-service-service
+spec:
+  type: ClusterIP
+  selector:
+    app: fantasy-football-service
+  ports:
+    - port: 80
+      targetPort: 80
+# ---
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: fantasy-football-service-autoscaler
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: fantasy-football-service
+#   minReplicas: 2
+#   maxReplicas: 10
+#   targetCPUUtilizationPercentage: 5

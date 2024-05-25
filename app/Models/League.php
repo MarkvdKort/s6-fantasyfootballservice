@@ -15,4 +15,9 @@ class League extends Model
         'name',
         'teams',
     ];
+
+    public function fantasyTeams()
+    {
+        return $this->hasMany(FantasyTeam::class);
+    }
 }

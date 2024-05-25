@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('fantasy_teams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('league_id')->constrained('leagues');
-            $table->foreignId('user_id')->constrained('users')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->string('name');
             $table->softDeletes();
             $table->timestamps();

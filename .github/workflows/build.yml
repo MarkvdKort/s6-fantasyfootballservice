@@ -33,6 +33,10 @@ jobs:
         with:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           project_id: ${{ secrets.GKE_PROJECT }}
+      - name: Authenticate to GKE
+        run: |-
+          gcloud config set project ${{ secrets.GKE_PROJECT }}
+          gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }}
       # - name: Log in to the Container registry
       #   uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
       #   with:

@@ -64,6 +64,8 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          ./kustomize build . | kubectl apply -f -
+          kubectl apply -f deployment/database.yaml -
+          kubectl apply -f deployment/deployment.yaml -
+          kubectl apply -f deployment/gateway.yaml -
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide

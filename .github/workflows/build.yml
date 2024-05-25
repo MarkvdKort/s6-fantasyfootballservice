@@ -29,14 +29,14 @@ jobs:
         uses:
           actions/checkout@v4
           # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@1bee7de035d65ec5da40a31f8589e240eba8fde5
-        with:
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
-      - name: Authenticate to GKE
-        run: |-
-          gcloud config set project ${{ secrets.GKE_PROJECT }}
-          gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }}
+      # - uses: google-github-actions/setup-gcloud@1bee7de035d65ec5da40a31f8589e240eba8fde5
+      #   with:
+      #     service_account_key: ${{ secrets.GKE_SA_KEY }}
+      #     project_id: ${{ secrets.GKE_PROJECT }}
+      # - name: Authenticate to GKE
+      #   run: |-
+      #     gcloud config set project ${{ secrets.GKE_PROJECT }}
+      #     gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }}
       # Build the Docker image
       - name: Build
         run: |-

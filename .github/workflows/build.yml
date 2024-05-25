@@ -7,6 +7,12 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  PROJECT_ID: fantasyfootball-service
+  PROJECT_NUMBER: PROJECT_NUMBER
+
+  CLUSTER: fantasyfootball-cluster
+  CLUSTER_ZONE: europe-west1
+
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 
 jobs:
@@ -22,6 +28,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - id: "auth"
+        name: "Obtain access token by using workload identity federation"
+        uses: "google-github-actions/auth@v0"
+        with:
+          create_credentials_file: true
+          token_format: access_token
+          service_account: github-actions-workflow@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+      - name: Connect to GKE
+        uses: google-github-actions/get-gke-credentials@v0
+        with:
+          cluster_name: ${{ env.CLUSTER }}
+          location: ${{ env.CLUSTER_ZONE }}
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
@@ -44,3 +62,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Deploy database to GKE
+        run: kubectl apply -f deployment/database.yaml
+      - name: Deploy service to GKE
+        run: kubectl apply -f deployment/deployment.yaml
+      - name: Deploy ingress to GKE
+        run: kubectl apply -f deployment/gateway.yaml

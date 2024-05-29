@@ -82,6 +82,8 @@ jobs:
           DEPLOYMENT_NAME: $DEPLOYMENT_NAME
           GITHUB_SHA: ${{ github.sha }}
         run: |-
+          gcloud auth activate-service-account --key-file=${{ secrets.GKE_SA_KEY }}
+          gke-gcloud-auth-plugin -project=$PROJECT_ID
           kubectl apply -f ./deployment/deployment.yaml
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide

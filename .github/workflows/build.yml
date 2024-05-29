@@ -34,8 +34,8 @@ jobs:
           service_account_key: ${{ secrets.GKE_SA_KEY_JSON }}
           project_id: ${{ secrets.GKE_PROJECT }}
 
-    - name: Authenticate to Google Cloud
-      run: gcloud auth activate-service-account --key-file=${{ secrets.GKE_SA_KEY_JSON }}
+      - name: Authenticate to Google Cloud
+        run: gcloud auth activate-service-account --key-file=${{ secrets.GKE_SA_KEY_JSON }}
 
       # Configure Docker to use the gcloud command-line tool as a credential
       # helper for authentication

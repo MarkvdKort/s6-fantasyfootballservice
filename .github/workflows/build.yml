@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: gcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: fantasyfootball-service
   PROJECT_ID: fantasyfootball-service
   GKE_CLUSTER: fantasyfootball-cluster # Add your cluster name here.
   GKE_ZONE: europe-west1 # Add your cluster zone here.

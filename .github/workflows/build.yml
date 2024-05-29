@@ -5,7 +5,7 @@ on:
 # Configures this workflow to run every time a change is pushed to the branch called release.
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: gcr.io
   IMAGE_NAME: ${{ github.repository }}
   PROJECT_ID: fantasyfootball-service
   GKE_CLUSTER: fantasyfootball-cluster # Add your cluster name here.
@@ -55,8 +55,9 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |-
+          IMAGE="$REGISTRY/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA"
           docker build \
-            --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
+            --tag "$IMAGE" \
             --build-arg GITHUB_SHA="$GITHUB_SHA" \
             --build-arg GITHUB_REF="$GITHUB_REF" \
             .

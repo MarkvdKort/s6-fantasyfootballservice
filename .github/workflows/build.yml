@@ -8,7 +8,7 @@ env:
   REGISTRY: gcr.io
   IMAGE_NAME: fantasyfootball-service
   PROJECT_ID: fantasyfootball-service
-  GKE_CLUSTER: fantasyfootball-cluster # Add your cluster name here.
+  GKE_CLUSTER: football-cluster # Add your cluster name here.
   GKE_ZONE: europe-west1 # Add your cluster zone here.
   DEPLOYMENT_NAME: fantasy-football-service # Add your deployment name here.
   IMAGE: fantasyfootball-service

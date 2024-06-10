@@ -33,7 +33,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app.kubernetes.io/name: ingress-nginx
+    app: fantasyfootball-ingress
   ports:
     - protocol: TCP
       port: 80

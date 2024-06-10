@@ -29,25 +29,37 @@ jobs:
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
-          path: ~\sonar\cache
+          path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Cache SonarCloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-      - name: Build and analyze
+          php-version: "8.1" # specify your PHP version
+          extensions: mbstring, intl, bcmath, gd, zip
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist
+
+      - name: Install SonarScanner
+        run: |
+          mkdir -p .sonar/scanner
+          curl -sSLo .sonar/scanner/sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip -o .sonar/scanner/sonar-scanner-cli.zip -d .sonar/scanner
+          export PATH="$PATH:$(pwd)/.sonar/scanner/sonar-scanner-4.6.2.2472-linux/bin"
+
+      - name: Run SonarScanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"markvdkort_s6-fantasyfootballservice" /o:"markvdkort" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          .sonar/scanner/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner \
+            -Dsonar.projectKey=markvdkort_s6-fantasyfootballservice \
+            -Dsonar.organization=markvdkort \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       # Runs a single command using the runners shell
       - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7

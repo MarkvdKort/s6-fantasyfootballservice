@@ -51,16 +51,16 @@ jobs:
       - name: Install SonarScanner
         run: |
           mkdir -p .sonar/scanner
-          curl -sSLo .sonar/scanner/sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          curl -sSLo .sonar/scanner/sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-linux.zip
           unzip -o .sonar/scanner/sonar-scanner-cli.zip -d .sonar/scanner
-          export PATH="$PATH:$(pwd)/.sonar/scanner/sonar-scanner-4.6.2.2472-linux/bin"
+          export PATH="$PATH:$(pwd)/.sonar/scanner/sonar-scanner-6.0.0.4432-linux/bin"
 
       - name: Run SonarScanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          .sonar/scanner/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner \
+          .sonar/scanner/sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner \
             -Dsonar.projectKey=markvdkort_s6-fantasyfootballservice \
             -Dsonar.organization=markvdkort \
             -Dsonar.sources=. \

@@ -20,7 +20,7 @@ spec:
       containers:
         - name: mysql-fantasy-football-service
           image: mysql/mysql-server:8.0
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: ""

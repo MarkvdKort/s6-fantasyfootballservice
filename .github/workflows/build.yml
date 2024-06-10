@@ -46,3 +46,6 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy service
         run: kubectl apply -f ./deployment/deployment.yaml
+      
+      - name: Deploy gateway
+        run: kubectl apply -f ./deployment/gateway.yaml

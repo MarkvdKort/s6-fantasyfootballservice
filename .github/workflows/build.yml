@@ -61,7 +61,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           .sonar/scanner/sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner \
-            -Dsonar.projectKey=markvdkort_s6-fantasyfootballservice \
+            -Dsonar.projectKey=MarkvdKort_s6-fantasyfootballservice \
             -Dsonar.organization=markvdkort \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \

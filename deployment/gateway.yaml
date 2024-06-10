@@ -33,11 +33,8 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30089
-  externalIPs:
-    - 80.11.12.10

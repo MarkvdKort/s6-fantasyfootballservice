@@ -40,7 +40,7 @@ jobs:
           extensions: mbstring, intl, bcmath, gd, zip
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist
+        run: composer install --ignore-platform-reqs
 
       - name: Install SonarScanner
         run: |

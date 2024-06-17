@@ -3,6 +3,7 @@
 use App\Http\Controllers\FantasyTeams\CreateFantasyTeamController;
 use App\Http\Controllers\Leagues\CreateLeagueController;
 use App\Http\Controllers\Users\CreateUserController;
+use App\Http\Controllers\Users\DeleteUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('leagues/create', CreateLeagueController::class);
 Route::post('fantasy-teams/create', CreateFantasyTeamController::class);
 Route::post('users/create', CreateUserController::class);
+Route::delete('users/delete', DeleteUserController::class);
 
 Route::get('leagues', function () {
     return response()->json('Leagues', 200);

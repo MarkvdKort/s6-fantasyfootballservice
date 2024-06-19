@@ -18,6 +18,12 @@ class CreateUserController extends Controller
     {
         $data = $request->validated();
 
+        $user = User::where('external_id', $data['external_id'])->first();
+
+        if ($user) {
+            return response()->json('User already exists', 409);
+        }
+
         $user = User::create([
             'user_name' => $data['user_name'],
             'external_id' => $data['external_id'],
